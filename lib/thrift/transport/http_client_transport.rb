@@ -55,6 +55,9 @@ module Thrift
       http = Net::HTTP.new @url.host, @url.port, @proxy_addr, @proxy_port
       apply_ssl_attributes(http) if @url.scheme == "https"
 
+      http.open_timeout = 5
+      http.read_timeout = 5 * 60
+
       resp = http.post(@url.request_uri, @outbuf, @headers)
       if 'application/x-thrift'.downcase != resp.content_type.downcase
         raise TransportException.new(TransportException::UNKNOWN, "Unexpected response content type: " + resp.content_type)
