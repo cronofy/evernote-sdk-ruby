@@ -60,7 +60,7 @@ module Thrift
 
       resp = http.post(@url.request_uri, @outbuf, @headers)
       if 'application/x-thrift'.downcase != resp.content_type.downcase
-        raise TransportException.new(TransportException::UNKNOWN, "Unexpected response content type: " + resp.content_type)
+        raise TransportException.new(TransportException::UNKNOWN, "Unexpected response content type: #{resp.content_type} code: #{resp.code}")
       end
       data = resp.body
       data = Bytes.force_binary_encoding(data)
