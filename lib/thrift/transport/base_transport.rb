@@ -27,10 +27,12 @@ module Thrift
     END_OF_FILE = 4
 
     attr_reader :type
+    attr_reader :response
 
-    def initialize(type=UNKNOWN, message=nil)
+    def initialize(type=UNKNOWN, message=nil, response=nil)
       super(message)
       @type = type
+      @response = response
     end
   end
 
