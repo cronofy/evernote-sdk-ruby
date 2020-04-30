@@ -59,6 +59,12 @@ module Thrift
       http.read_timeout = 5 * 60
 
       resp = http.post(@url.request_uri, @outbuf, @headers)
+
+      case resp
+      when Net::HTTPTooManyRequests
+        raise RateLimitException.new("Rate limits exceeded")
+      end
+
       if 'application/x-thrift'.downcase != resp.content_type.downcase
         raise TransportException.new(TransportException::UNKNOWN, "Unexpected response content type: #{resp.content_type} code: #{resp.code}")
       end

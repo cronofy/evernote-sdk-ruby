@@ -34,6 +34,9 @@ module Thrift
     end
   end
 
+  class RateLimitException < Exception
+  end
+
   module TransportUtils
     # Deprecated: Use Thrift::Bytes instead
     def self.get_string_byte(string, index)
